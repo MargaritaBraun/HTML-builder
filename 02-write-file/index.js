@@ -23,7 +23,7 @@ readline.on('line', (input) => {
   if (input.trim().toLowerCase() === '.exit') {
     readline.close();
   } else {
-    fs.appendFileSync(localPath, `${input}\n`);
+    fs.appendFile(localPath, `${input}\n`);
   }
 });
 
