@@ -21,7 +21,7 @@ const localPath = path.join(__dirname, 'text.txt');
 readline.setPrompt('Please enter text: ');
 readline.prompt();
 readline.on('line', (input) => {
-  if (input.trim().toLowerCase() === '.exit') {
+  if (input.trim().toLowerCase() === 'exit') {
     readline.close();
   } else {
     fs.appendFile(localPath, `${input}\n`, (err) => {

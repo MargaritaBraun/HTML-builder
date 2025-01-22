@@ -4,21 +4,29 @@ const fs = require('node:fs/promises');
 const dirPathInput = path.join(__dirname, 'files');
 const dirPathOutput = path.join(__dirname, 'files-copy');
 
-const getDirForCopy = fs
-  .stat(dirPathOutput)
-  .then(() => {
+async function clearDirectory(dirPathOutput) {
+  const files = await fs.readdir(dirPathOutput);
+  const olderFiles = files.map((file) => {
+    const filePath = path.join(dirPathOutput, file);
+    return fs.unlink(filePath);
+  });
+  return Promise.all(olderFiles);
+}
+async function getDirForCopy() {
+  try {
+    await fs.stat(dirPathOutput);
     console.log('folder has been');
-    return fs.readdir(dirPathInput);
-  })
-  .catch(() => {
+    await clearDirectory(dirPathOutput);
+  } catch {
     console.log('new folder created');
     fs.mkdir(path.join(__dirname, 'files-copy'), {
       recursive: true,
     });
-    return fs.readdir(dirPathInput);
-  });
+  }
+  return fs.readdir(dirPathInput);
+}
 
-getDirForCopy
+getDirForCopy()
   .then((files) => {
     const copyedFiles = files.map((file) => {
       const oldPath = path.join(dirPathInput, file);
