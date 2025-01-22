@@ -44,7 +44,7 @@ const copyFunc = async (src, dest) => {
     .catch((error) => console.error(error));
 };
 
-copyFunc(dirPathInputAssets, dirPathOutputAssets);
+// copyFunc(dirPathInputAssets, dirPathOutputAssets);
 
 const dirPathInputCss = path.join(__dirname, 'styles');
 const dirPathOutputCssFile = path.join(__dirname, 'project-dist', 'style.css');
@@ -67,7 +67,7 @@ const buildingCssFunc = async (srcCss, pathToCss) => {
     .catch((error) => console.error(error));
 };
 
-buildingCssFunc(dirPathInputCss, dirPathOutputCssFile);
+// buildingCssFunc(dirPathInputCss, dirPathOutputCssFile);
 
 const puzzle = path.join(directory, 'components');
 const dirPathCompiledHtml = path.join(directory, 'project-dist', 'index.html');
@@ -124,4 +124,15 @@ const puzzleFunc = async (template, compiledHtml, puzzleCode) => {
   console.log('Compiled HTML saved to:', compiledHtml);
 };
 
-puzzleFunc(dirPathInputHtml, dirPathCompiledHtml, puzzle);
+// puzzleFunc(dirPathInputHtml, dirPathCompiledHtml, puzzle);
+
+const createBuilder = () => {
+  return copyFunc(dirPathInputAssets, dirPathOutputAssets)
+    .then(() => buildingCssFunc(dirPathInputCss, dirPathOutputCssFile))
+    .then(() => puzzleFunc(dirPathInputHtml, dirPathCompiledHtml, puzzle))
+    .then(() => console.log('all is done'))
+    .catch((error) => console.error(error));
+};
+
+
+createBuilder();
